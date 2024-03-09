@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const dbconnect = require('./config')
 const reservationModel = require('./models/reservationModel')
 const app = express()
+const PORT = process.env.PORT || 3000
 
 const router = express.Router()
 
@@ -37,8 +39,8 @@ router.delete("/:id", async(req, res)=>{
 
 app.use(express.json())
 app.use(router)
-app.listen(3001, ()=>{
-    console.log("3001 server")
+app.listen(PORT, ()=>{
+    console.log(`${PORT} server`)
 })
 
 dbconnect()
