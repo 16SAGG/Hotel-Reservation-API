@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+
 const dbconnect = ()=>{
     mongoose.set('strictQuery', true)
     mongoose.connect(process.env.MONGO_URL, {}, (err,res) =>{
@@ -7,4 +8,5 @@ const dbconnect = ()=>{
     })
 }
 
-module.exports = dbconnect
+
+module.exports = {dbconnect}

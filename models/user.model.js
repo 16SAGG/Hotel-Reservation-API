@@ -32,7 +32,17 @@ const userSchema = new mongoose.Schema({
         require: true
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    statics:{
+        encryptPassword : async password =>{
+            console.log(password)
+            const salt = await bcrypt.genSalt(10)
+            return await bcrypt.hash(password, salt)
+        },
+        matchPassword : async function(password){
+            return await bcrypt.compare(password, this.password)
+        }
+    }
 })
 
 userSchema.methods.encryptPassword = async password =>{

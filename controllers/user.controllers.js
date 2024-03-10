@@ -3,7 +3,18 @@ const Users = require("../models/user.model")
 const userCtrl= {}
 
 userCtrl.post = async(req, res)=>{
-    const body = req.body
+    const {name, lastName, email, password, birthDate, direction, phone} = req.body
+
+    const body = {
+        name,
+        lastName,
+        email,
+        password: await Users.encryptPassword(password),
+        birthDate,
+        direction,
+        phone
+    }
+    
     const response = await Users.create(body)
     res.send(response)
 }

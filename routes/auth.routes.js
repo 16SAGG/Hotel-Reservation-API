@@ -4,5 +4,5 @@ const router = Router()
 
 module.exports = router
 
-router.get('/signup', signUp)
-router.get('/signin', signIn)
+router.post('/signup', signUp)
+router.post('/signin', signIn)
