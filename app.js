@@ -1,6 +1,12 @@
 const express = require('express')
 const morgan = require('morgan')
+const {createAdmin, createRoles, createRooms} = require('./libs/initialSetup')
+
 const app = express()
+
+createRoles()
+createAdmin()
+createRooms()
 
 app.use(express.json())
 app.use(morgan('dev'))

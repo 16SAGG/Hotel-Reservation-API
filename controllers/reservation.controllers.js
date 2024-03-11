@@ -14,22 +14,24 @@ reservationCtrl.getAll = async(req, res)=>{
 }
 
 reservationCtrl.getById = async(req, res)=>{
-    const id = req.params.id
-    const response = await Reservations.findById(id)
-    res.send(response)
+    const reservationId = req.params.reservation_id
+    
+    const response = await Reservations.findById(reservationId)
+    res.json(response)
 }
 
 reservationCtrl.update = async(req, res)=>{
-    const id = req.params.id
+    const reservationId = req.params.reservation_id
     const body = req.body
-    const response = await Reservations.findOneAndUpdate({_id: id}, body)
-    res.send(response)
+
+    const response = await Reservations.findOneAndUpdate({_id: reservationId}, body)
+    res.json(body)
 }
 
 reservationCtrl.remove = async(req, res)=>{
-    const id = req.params.id
-    const response = await Reservations.deleteOne({_id: id})
-    res.send(response)
+    const reservationId = req.params.reservation_id
+    const response = await Reservations.deleteOne({_id: reservationId})
+    res.json({message: "Reservation Deleted"})
 }
 
 module.exports = reservationCtrl
