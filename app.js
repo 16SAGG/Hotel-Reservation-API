@@ -1,12 +1,22 @@
 const express = require('express')
 const morgan = require('morgan')
-const {createAdmin, createRoles, createRooms} = require('./libs/initialSetup')
+const {createAdmin, createRoles, createRooms, createReservations} = require('./libs/initialSetup')
+const { currentDate, tomorrowDate, millisecondsPerDay } = require('./libs/values')
 
 const app = express()
 
 createRoles()
 createAdmin()
 createRooms()
+createReservations()
+
+console.log(
+    currentDate + millisecondsPerDay * 0,
+    currentDate + millisecondsPerDay * 1,
+    currentDate + millisecondsPerDay * 2,
+    currentDate + millisecondsPerDay * 3,
+    currentDate + millisecondsPerDay * 4,
+)
 
 app.use(express.json())
 app.use(morgan('dev'))

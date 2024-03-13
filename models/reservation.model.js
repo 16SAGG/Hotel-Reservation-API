@@ -1,9 +1,5 @@
 const mongoose = require('mongoose')
-
-const millisecondsPerDay = 86400000
-
-const currentDate = new Date(Date.now())
-const tomorrowDate = new Date(Date.now() + millisecondsPerDay ) 
+const {currentDate, tomorrowDate} = require('../libs/values')
 
 const reservationSchema = new mongoose.Schema({
     user: {
@@ -17,13 +13,13 @@ const reservationSchema = new mongoose.Schema({
         require: true
     },
     checkIn: {
-        type: Date,
+        type: Number,
         default: currentDate,
         min: currentDate,
         require: true
     },
     checkOut: {
-        type: Date,
+        type: Number,
         default: tomorrowDate,
         min: tomorrowDate,
         require: true

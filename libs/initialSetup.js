@@ -1,6 +1,8 @@
 const Roles = require('../models/role.model')
 const Users = require('../models/user.model')
 const Rooms = require('../models/room.model')
+const Reservations = require('../models/reservation.model')
+const { currentDate, millisecondsPerDay } = require('./values')
 
 const createAdmin = async ()=>{
     try{
@@ -9,7 +11,6 @@ const createAdmin = async ()=>{
         if (usersIsNotVoid) return
 
         const allRoles = await Roles.find({})
-        console.log(allRoles)
         const admin = await Users.create({
             name: "The",
             lastname: "Admin",
@@ -77,4 +78,47 @@ const createRooms = async () =>{
     }
 }
 
-module.exports = {createAdmin, createRoles, createRooms}
+const createReservations = async()=>{
+    try{
+        const reservationsCount = await Reservations.estimatedDocumentCount()
+
+        if(reservationsCount > 0) return
+
+        const admin = await Users.findOne({name: "The"})
+        const basicRoom = await Rooms.findOne({name: "basic"})
+        const biggestRoom = await Rooms.findOne({name: "biggest"})
+        const premiumRoom = await Rooms.findOne({name: "premium"})
+
+        const values = await Promise.all([
+            Reservations.create({
+                user: admin,
+                room: basicRoom,
+                checkIn: currentDate + millisecondsPerDay * 0,
+                checkOut: currentDate + millisecondsPerDay * 3,
+                adultsQuantity: 2,
+                childrenQuantity: 0,
+            }),
+            Reservations.create({
+                user: admin,
+                room: premiumRoom,
+                checkIn: currentDate + millisecondsPerDay * 0,
+                checkOut: currentDate + millisecondsPerDay * 1,
+                adultsQuantity: 2,
+                childrenQuantity: 0,
+            }),
+            Reservations.create({
+                user: admin,
+                room: biggestRoom,
+                checkIn: currentDate + millisecondsPerDay * 2,
+                checkOut: currentDate + millisecondsPerDay * 4,
+                adultsQuantity: 2,
+                childrenQuantity: 0,
+            }),
+        ])
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+module.exports = {createAdmin, createRoles, createRooms, createReservations}

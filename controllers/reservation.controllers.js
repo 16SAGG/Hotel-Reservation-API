@@ -3,35 +3,60 @@ const Reservations = require("../models/reservation.model")
 const reservationCtrl = {}
 
 reservationCtrl.post = async(req, res)=>{
-    const body = req.body
-    const response = await Reservations.create(body)
-    res.send(response)
+    try{
+        const body = req.body
+        const response = await Reservations.create(body)
+        res.json(response)
+    }
+    catch(err){
+        res.json(err)
+    }
 }
 
 reservationCtrl.getAll = async(req, res)=>{
-    const response = await Reservations.find({})
-    res.send(response)
+    try{
+        const response = await Reservations.find({})
+        res.json(response)
+    }
+    catch(err){
+        res.json(err)
+    }
 }
 
 reservationCtrl.getById = async(req, res)=>{
-    const reservationId = req.params.reservation_id
+    try{
+        const reservationId = req.params.reservation_id
     
-    const response = await Reservations.findById(reservationId)
-    res.json(response)
+        const response = await Reservations.findById(reservationId)
+        res.json(response)
+    }
+    catch(err){
+        res.json(err)
+    }
 }
 
 reservationCtrl.update = async(req, res)=>{
-    const reservationId = req.params.reservation_id
-    const body = req.body
+    try{
+        const reservationId = req.params.reservation_id
+        const body = req.body
 
-    const response = await Reservations.findOneAndUpdate({_id: reservationId}, body)
-    res.json(body)
+        const response = await Reservations.findOneAndUpdate({_id: reservationId}, body)
+        res.json(body)
+    }
+    catch (err){
+        res.json(err)
+    }
 }
 
 reservationCtrl.remove = async(req, res)=>{
-    const reservationId = req.params.reservation_id
-    const response = await Reservations.deleteOne({_id: reservationId})
-    res.json({message: "Reservation Deleted"})
+    try{
+        const reservationId = req.params.reservation_id
+        const response = await Reservations.deleteOne({_id: reservationId})
+        res.json({message: "Reservation Deleted"})
+    }
+    catch(err){
+        res.json(err)
+    }
 }
 
 module.exports = reservationCtrl

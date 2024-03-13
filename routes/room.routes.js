@@ -1,16 +1,18 @@
 const {Router} = require('express')
-const {post, getAll, getById, update, remove} = require('../controllers/room.controllers')
-const {verifyToken, isModerator, isAdmin} = require('../middlewares/index')
+const {post, getAll, getById, update, remove, getAvailableRoomsByRequirements} = require('../controllers/room.controllers')
+const {verifyToken, isModerator} = require('../middlewares/index')
 const router = Router()
 
 module.exports = router
 
-router.post("/", [verifyToken, isModerator, isAdmin], post)
+router.post("/", [verifyToken, isModerator], post)
 
 router.get("/", getAll)
 
 router.get("/:id", getById)
 
-router.put("/:id", [verifyToken, isModerator, isAdmin], update)
+router.get("/:check_in/:check_out/:guests_count", getAvailableRoomsByRequirements)
 
-router.delete("/:id", [verifyToken, isModerator, isAdmin],remove)
+router.put("/:id", [verifyToken, isModerator], update)
+
+router.delete("/:id", [verifyToken, isModerator],remove)

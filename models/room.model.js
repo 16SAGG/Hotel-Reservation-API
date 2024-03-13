@@ -10,7 +10,7 @@ const roomSchema = new mongoose.Schema({
         require: true,
     },
     maxCapacity: {
-        type: String,
+        type: Number,
         require: true,
     },
 }, {
