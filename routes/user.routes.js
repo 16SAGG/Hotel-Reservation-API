@@ -7,9 +7,9 @@ module.exports = router
 
 router.post("/", [verifyToken, isAdmin], post)
 
-router.get("/", [verifyToken, isModerator, isAdmin], getAll)
+router.get("/", [verifyToken, isAdmin], getAll)
 
-router.get("/:id", [verifyToken, isModerator, isAdmin], getById)
+router.get("/:id", [verifyToken, isAdmin], getById)
 
 router.put("/:id", [verifyToken, isAdmin], update)
 
